@@ -3,6 +3,29 @@
 #include <string>
 using namespace std;
 
+//abstract class for user and manager class
+class Person{
+
+};
+
+//
+class Transaction{
+
+};
+
+class BankAccount{
+
+};
+
+class User : public Person{
+
+};
+
+//Manager can access all user data and transaction history
+class Manager : public Person{
+
+};
+
 int main(){
 
     
