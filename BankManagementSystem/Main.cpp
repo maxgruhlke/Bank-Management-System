@@ -6,35 +6,12 @@
 #include <algorithm>
 #include <cctype>
 #include <stack>
+#include "Person.cpp"
 #include "User.cpp"
 #include "Manager.cpp"
+
 using namespace std;
-
-//abstract class for user and manager class
-class Person{
-
-};
-
-//
-class Transaction{
-
-};
-
-class BankAccount{
-
-};
-
-class User : public Person{
-
-};
-
-//Manager can access all user data and transaction history
-class Manager : public Person{
-
-};
-
-
-//global person currentUser=NULL;
+Person* currentPerson;
 string toLower(string s)
 {
 transform(s.begin(), s.end(), s.begin(),
@@ -46,7 +23,7 @@ return s;
 string userLogin()
 {
     int option=0;
-    int login=-1;
+    int userID=-1;
     do//User can choose to regular login/create account/manager login/exit
     {
         string userLabel="| Username: ";
@@ -78,11 +55,11 @@ string userLogin()
         }
         cout<<"|"<<setw(19)<<left<<setfill('_')<<""<<"|"<<endl;
         cin>>option;
-        //login=login(username,password);
+        userID=User::findUser(username,password);
         //returns -1 if login wrong else returns account num
-        if(login!=-1)
+        if(userID!=-1)
         {
-            //currentPerson=instantiate a user class
+            currentPerson=new User(userID);
             break;
         }
     }while(true);
@@ -100,15 +77,22 @@ string bankAccount()
 {
     int numOptions=4;
     int option=0;
+    User* user = dynamic_cast<User*>(currentPerson);
     do
     {
         cout<<" "<<setw(25)<<setfill('_')<<""<<endl;
         cout<<setw(25)<<left<<setfill(' ')<<"|"<<"|"<<endl;
         cout<<setw(25)<<left<<"| 1. Transaction"<<"|"<<endl;
         cout<<setw(25)<<left<<"| 2. Create Account"<<"|"<<endl;
-        //numOption+=currentUser.getNumAccounts
-        //const Account[] accounts=currentUser.getAccounts();
-        //for (account in accounts){print account} 
+        numOptions+=user->getNumAccounts();
+        int numAccounts=user->getNumAccounts();
+        const BankAccount* accounts=user->getAccounts();
+       /*for( BankAccount account : accounts)
+        {
+
+        }
+       
+       */ 
         cout<<setw(25)<<left<<"| 3...6. AccountName: $456.52"<<"|"<<endl;
         cout<<setw(25)<<left<<"| 7. back"<<"|"<<endl;
         cout<<setw(25)<<left<<"| 8. exit"<<"|"<<endl;
@@ -197,6 +181,7 @@ void run()
 
 int main(){
 run();
+delete currentPerson;
     /*
     ofstream outputFile("managers.txt", ofstream::app); //create or open a file for writing
 
