@@ -8,28 +8,44 @@ using namespace std;
 class User : public Person{
 
     private:
-    int userID;
     int numAccounts;
+    string username;
     BankAccount* accounts;
     public:
-    User(int userID)
+    static int numUsers;
+
+    User(string username, string password)
     {
-        accounts=new BankAccount[numAccounts];
-        //find user folder based on userID and fill info about user
+        string pass=User::findUser(username);
+        if(pass==password)
+        {
+            
+
+        }
+       
     }
     ~User()
     {delete[] accounts;}
-    int getNumAccounts()
-    {return numAccounts;}
-    int getUserID(){return userID;}
-    BankAccount* getAccounts()
+
+    static bool createUser(string username, string password)
     {
-        return accounts;
+     string exists=findUser(username);   
+        if(exists.empty())
+        {
+            User::numUsers++;
+            //add user to users.txt
+            return true;
+        }
+        return false;
     }
-    static int findUser(string username,string password)
+    static string findUser(string username)
     {
-        return 0;//gives userid
+       // return password for user
+       return "";
     }
-    
+    static int getNumUsers()
+    {
+        return numUsers;
+    }
 };
 

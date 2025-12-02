@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <cctype>
 #include <stack>
-#include "Person.cpp"
+//#include "Person.cpp"
 #include "User.cpp"
 #include "Manager.cpp"
 
@@ -84,9 +84,9 @@ string bankAccount()
         cout<<setw(25)<<left<<setfill(' ')<<"|"<<"|"<<endl;
         cout<<setw(25)<<left<<"| 1. Transaction"<<"|"<<endl;
         cout<<setw(25)<<left<<"| 2. Create Account"<<"|"<<endl;
-        numOptions+=user->getNumAccounts();
-        int numAccounts=user->getNumAccounts();
-        const BankAccount* accounts=user->getAccounts();
+       // numOptions+=user->getNumAccounts();
+       // int numAccounts=user->getNumAccounts();
+       // const BankAccount* accounts=user->getAccounts();
        /*for( BankAccount account : accounts)
         {
 
@@ -108,7 +108,27 @@ string bankAccount()
 }
 string transaction(){return "";}
 string createBankAccount(){return "";}
-string createAccount(){return "";}
+string createAccount()
+{
+    string username;
+    string password;
+    const int numUsers=User::getNumUsers();
+    int currentUsers;
+    do
+    {
+        cout<<"give me the username"<<endl;
+        cin>>username;
+        cout<<"give me the password"<<endl;
+        cin>>password;
+        User::createUser(username,password);
+        currentUsers=User::getNumUsers();
+       
+    } while (numUsers==currentUsers);
+    
+
+    
+    
+}
 string managerLogin(){return "";}
 
 
