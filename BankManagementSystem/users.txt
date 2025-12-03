@@ -1,2 +1,0 @@
-User_name#: ABC
-Pass: 123
