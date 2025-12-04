@@ -29,6 +29,7 @@ void User::loadExistingUsers(){
             numUsers++;
         }
     }
+    inputFile.close();
 }
 
 string User::findUser(string username){
@@ -48,11 +49,12 @@ string User::findUser(string username){
         else if(line[0] == '@'){
             filePassword = line.erase(0, 1);
             if(fileUsername == username){
+                inputFile.close();
                 return filePassword;
             }
         }
     }
-
+    inputFile.close();
     return "";
 }
 
