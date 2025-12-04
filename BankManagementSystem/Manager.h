@@ -16,7 +16,7 @@ public:
         return true;
     }
 
-    // any manager-specific functions you plan to add later
 };
 
 #endif
+
