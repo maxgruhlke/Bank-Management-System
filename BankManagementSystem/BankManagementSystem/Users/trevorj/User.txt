@@ -1,2 +1,0 @@
-userID,FName,LName,numAccounts
-1,Trevor,Jandrin,2

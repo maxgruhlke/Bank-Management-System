@@ -1,2 +1,0 @@
-User_name#: admin
-Pass: admin
