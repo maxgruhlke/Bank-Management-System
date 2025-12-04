@@ -43,9 +43,11 @@ string userLogin(){
 
             if(toLower(username) == "back"){
                 return "back";
+                break;
             }
             if(toLower(username) == "exit"){
                 return "exit";
+                break;
             }
 
             string pass = User::findUser(username);
@@ -66,9 +68,11 @@ string userLogin(){
 
             if(toLower(password) == "back"){
                 return "back";
+                break;
             }
             if(toLower(password) == "exit"){
                 return "exit";
+                break;
             }
 
             string correctPass = User::findUser(currentUser);
@@ -174,9 +178,11 @@ string managerLogin(){
 
             if(toLower(username) == "back"){
                 return "back";
+                break;
             }
             if(toLower(username) == "exit"){
                 return "exit";
+                break;
             }
 
             string pass = Manager::findManager(username);
@@ -197,9 +203,11 @@ string managerLogin(){
 
             if(toLower(password) == "back"){
                 return "back";
+                break;
             }
             if(toLower(password) == "exit"){
                 return "exit";
+                break;
             }
 
             string correctPass = Manager::findManager(currentUser);
@@ -261,8 +269,10 @@ string managerMenu(){
                 break;
             case 5:
                 return "back";
+                break;
             case 6:
                 return "exit";
+                break;
             default:
                 cout << "Invalid option" << endl;
                 break;
@@ -347,3 +357,4 @@ int main(){
     run();
     delete currentPerson;
 }
+
