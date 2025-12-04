@@ -1,0 +1,4 @@
+name,balance
+Savings,345.34
+checking,45.02
+MoneyMarket,36.02
