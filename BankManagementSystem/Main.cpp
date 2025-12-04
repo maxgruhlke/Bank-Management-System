@@ -139,6 +139,7 @@ string bankAccount()
 }
 string transaction(){return "";}
 string createBankAccount(){return "";}
+
 string createAccount(){
     string username;
     string password;
@@ -157,7 +158,81 @@ string createAccount(){
 
     return "userLogin";
 }
-string managerLogin(){return "";}
+
+string managerLogin(){
+    int option = 0;
+    int login = -1;
+    do{
+        string userLabel = "| Manager Username: ";
+        string passwordLabel = "| Manager Password: ";
+        string username = "";
+        string password = "";
+        cout << " " << setw(25) << setfill('_') << "" << endl;
+        cout << setw(25) << left << setfill(' ') << "|" << "|" << endl;
+        cout << setw(25) << left << "| Type back/exit anytime." << "|" << endl;
+        
+        bool foundUsername = false;
+        bool foundPassword = false;
+        string currentUser = "";
+
+        do{
+            cout << userLabel;
+            cin >> username;
+
+            if(toLower(username) == "back"){
+                return "back";
+            }
+            else if(toLower(username) == "exit"){
+                return "exit";
+            }
+
+            string testPassword = Manager::findManager(username);
+
+            if(!testPassword.empty()){
+                currentUser = username;
+                foundUsername = true;
+            }
+            else{
+                cout << "Username not found in system!" << endl;
+            }
+
+        } while(!foundUsername);
+
+        do{
+            cout << passwordLabel;
+            cin >> password;
+
+            if(toLower(password) == "back"){
+                return "back";
+            } 
+            else if(toLower(password) == "exit"){
+                return "exit";
+            }
+
+            string updatedPassword = Manager::findManager(currentUser);
+
+            if((password == updatedPassword)){
+                foundPassword = true;
+                cout << "Successfully logged in!" << endl;
+                currentPerson = new Manager(currentUser, password);
+            }
+            else{
+                cout << "Incorrect password!" << endl;
+            }
+
+        } while(!foundPassword);
+
+        cout << "|" << setw(19) << left << setfill('_') << "" << "|" << endl;
+        cin >> option;
+
+        if(login != -1){
+            break;
+        }
+
+    } while(true);
+
+    return "";
+}
 
 
 string homePage()
@@ -233,3 +308,4 @@ int main(){
     run();
     delete currentPerson;
 }
+
