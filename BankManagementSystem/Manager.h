@@ -12,11 +12,14 @@ public:
 
     static string findManager(string username);
 
+    static void viewAllUsers();
+    static void viewUserDetails(string username);
+    static void viewAllTransactions();
+    static void viewUserTransactions(string username);
+
     bool isManager() const override {
         return true;
     }
-
 };
 
 #endif
-
