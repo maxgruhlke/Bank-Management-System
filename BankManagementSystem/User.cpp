@@ -28,7 +28,7 @@ void User::loadExistingUsers() {
     inputFile.close();
 }
 
-string User::findUser(string username){
+string User::findPerson(string username){
     ifstream inputFile("users.txt");
     if(!inputFile.is_open()){
         return "";
@@ -55,7 +55,9 @@ string User::findUser(string username){
 }
 
 bool User::createUser(string username, string password) {
-    string exists = findUser(username);   
+    User temp("", ""); 
+    string exists = temp.findPerson(username);
+  
     
     if (exists.empty()) {
         User::numUsers++;
