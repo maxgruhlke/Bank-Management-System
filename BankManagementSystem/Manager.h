@@ -10,16 +10,12 @@ public:
     Manager(string username, string password);
     ~Manager(){}
 
-    static string findManager(string username);
+    string findPerson(string username) override;
 
     static void viewAllUsers();
     static void viewUserDetails(string username);
     static void viewAllTransactions();
     static void viewUserTransactions(string username);
-
-    bool isManager() const override {
-        return true;
-    }
 };
 
 #endif
