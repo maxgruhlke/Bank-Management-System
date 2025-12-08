@@ -72,7 +72,8 @@ string userLogin() {
              //   break;
             }
 
-            string pass = User::findUser(username);
+            User tempUser("", "");
+            string pass = tempUser.findPerson(currentUser);
 
             if (!pass.empty()){
                 foundUsername = true;
@@ -97,7 +98,8 @@ string userLogin() {
               //  break;
             }
 
-            string correctPass = User::findUser(currentUser);
+            User tempUser("", "");
+            string correctPass = tempUser.findPerson(currentUser);
 
             if (password == correctPass) {
                 foundPassword = true;
@@ -511,7 +513,8 @@ string managerLogin(){
                 break;
             }
 
-            string pass = Manager::findManager(username);
+            Manager tempManager("", "");
+            string pass = tempManager.findPerson(username);
 
             if(!pass.empty()){
                 foundUsername = true;
@@ -536,7 +539,8 @@ string managerLogin(){
                 break;
             }
 
-            string correctPass = Manager::findManager(currentUser);
+            Manager tempManager("", "");
+            string correctPass = tempManager.findPerson(currentUser);
 
             if(password == correctPass){
                 foundPassword = true;
@@ -688,5 +692,6 @@ int main() {
     run();
     delete currentPerson;
 }
+
 
 
