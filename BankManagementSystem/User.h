@@ -1,12 +1,8 @@
 #ifndef USER_H
 #define USER_H
 #include <string>
-#include <filesystem>
-#include <fstream>
-#include <iostream>
 #include "Person.h"
 #include "BankAccount.h"
-
 using namespace std;
 
 class User : public Person {
@@ -21,16 +17,12 @@ public:
     ~User();
 
     static bool createUser(string username, string password);
-    static string findUser(string username);
+    string findPerson(string username) override;
 
     static void loadExistingUsers();
     
     static int getNumUsers(){
         return numUsers;
-    }
-
-    bool isManager() const override{
-        return false;
     }
 };
 
