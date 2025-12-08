@@ -312,6 +312,7 @@ Transaction t1 = Transaction(BankAccount(user->getUsername(), accountType1));
 Transaction t2 = Transaction(BankAccount(user->getUsername(), accountType2));
     if (t1.withdraw(amount) == false) {
     cout << "Error : not enough funds in account to withdraw!" << endl;
+                return;
 }
 else
 {
@@ -687,4 +688,5 @@ int main() {
     run();
     delete currentPerson;
 }
+
 
