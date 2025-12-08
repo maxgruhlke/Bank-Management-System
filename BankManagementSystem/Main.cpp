@@ -73,7 +73,7 @@ string userLogin() {
             }
 
             User tempUser("", "");
-            string pass = tempUser.findPerson(currentUser);
+            string pass = tempUser.findPerson(username);
 
             if (!pass.empty()){
                 foundUsername = true;
@@ -99,7 +99,7 @@ string userLogin() {
             }
 
             User tempUser("", "");
-            string correctPass = tempUser.findPerson(currentUser);
+            string correctPass = tempUser.findPerson(username);
 
             if (password == correctPass) {
                 foundPassword = true;
@@ -692,6 +692,7 @@ int main() {
     run();
     delete currentPerson;
 }
+
 
 
 
