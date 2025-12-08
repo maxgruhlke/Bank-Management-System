@@ -22,7 +22,6 @@ public:
         return password;
     }
 
-    //must be overridden
-    virtual bool isManager() const = 0;
+    virtual string findPerson(string username) = 0;
 };
 #endif
