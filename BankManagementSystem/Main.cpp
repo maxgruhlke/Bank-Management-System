@@ -15,6 +15,27 @@
 using namespace std;
 Person* currentPerson;
 int currentaccount=0; 
+bool checkCIN (int& option)
+{
+if(cin.fail()) {
+            cin.clear(); 
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            option = 0; 
+            return false;
+        }
+        return true;
+}
+bool cancelTransaction()
+{
+    string answer="";
+    cout<<"Would you like to cancel transaction? (y/n)";
+    cin>>answer;
+    if(answer=="y")
+    {
+        return true;
+    }
+    return false;
+}
 string toLower(string s)
 {
 transform(s.begin(), s.end(), s.begin(),
@@ -117,6 +138,7 @@ string userHomePage() {
        cout<<"|"<<setw(24)<<left<<setfill('_')<<""<<"|"<<endl;
 
         cin >> option;
+        checkCIN(option);
     if (option == 1) {return "transaction";}
     else if (option == 2) {return "viewAccounts";}
     else if (option == 3) {return "back";}
@@ -128,8 +150,19 @@ string userHomePage() {
 void deposit()
 {
     int amount=0;
-cout<<"How much money would you like to put in: ";
+    while(amount<=0)
+    {
+        cout<<"How much money would you like to put in: ";
 cin>>amount;
+if(!checkCIN(amount))
+{
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
+
  User* user = dynamic_cast<User*>(currentPerson);
         cout<<" "<<setw(30)<<setfill('_')<<""<<endl;
         cout<<setw(30)<<left<<setfill(' ')<<"|"<<"|"<<endl;
@@ -143,10 +176,22 @@ cin>>amount;
         cout <<left<<"| Account number : "<<setw(11) << z.getAccountNumber() <<"|"<< endl;
         cout <<left<<"| Account balance : $" <<setw(9)<< z.getAccountBalance() <<"|"<< endl;
          cout<<"|"<<setw(29)<<left<<setfill('_')<<""<<"|"<<endl;
-    cout<<"From which account type: ";
-    int accountType=0;
-    cin>>accountType;
 
+    int accountType=-1;
+   
+while(accountType!=z.getAccountType()&&accountType!=x.getAccountType())
+    {
+            cout<<"From which account type: ";
+ cin>>accountType;
+if(!checkCIN(accountType))
+{
+    accountType=-1;
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
     Transaction t = Transaction(BankAccount(user->getUsername(), accountType));
     t.deposit(amount);
     cout << "You have successfully deposited $" << amount << " into account : " << accountType << endl;
@@ -154,8 +199,18 @@ cin>>amount;
 void withdraw()
 {
     int amount=0;
-cout<<"How much money would you like to take out: ";
+    while(amount<=0)
+    {
+        cout<<"How much money would you like to put in: ";
 cin>>amount;
+if(!checkCIN(amount))
+{
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
  User* user = dynamic_cast<User*>(currentPerson);
         cout<<" "<<setw(30)<<setfill('_')<<""<<endl;
         cout<<setw(30)<<left<<setfill(' ')<<"|"<<"|"<<endl;
@@ -169,9 +224,22 @@ cin>>amount;
         cout <<left<<"| Account number : "<<setw(11) << z.getAccountNumber() <<"|"<< endl;
         cout <<left<<"| Account balance : $" <<setw(9)<< z.getAccountBalance() <<"|"<< endl;
          cout<<"|"<<setw(29)<<left<<setfill('_')<<""<<"|"<<endl;
-cout<<"From which account type: ";
-int accountType=0;
-cin>>accountType;
+
+    int accountType=-1;
+   
+while(accountType!=z.getAccountType()&&accountType!=x.getAccountType())
+    {
+            cout<<"From which account type: ";
+ cin>>accountType;
+if(!checkCIN(accountType))
+{
+    accountType=-1;
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
 
 Transaction t = Transaction(BankAccount(user->getUsername(), accountType));
 if (t.withdraw(amount) == false) {
@@ -184,8 +252,18 @@ else {
 void transfer()
 {
         int amount=0;
-cout<<"How much money would you like to transfer out: ";
+    while(amount<=0)
+    {
+        cout<<"How much money would you like to put in: ";
 cin>>amount;
+if(!checkCIN(amount))
+{
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
     User* user = dynamic_cast<User*>(currentPerson);
         cout<<" "<<setw(30)<<setfill('_')<<""<<endl;
         cout<<setw(30)<<left<<setfill(' ')<<"|"<<"|"<<endl;
@@ -199,14 +277,46 @@ cin>>amount;
         cout <<left<<"| Account number : "<<setw(11) << z.getAccountNumber() <<"|"<< endl;
         cout <<left<<"| Account balance : $" <<setw(9)<< z.getAccountBalance() <<"|"<< endl;
          cout<<"|"<<setw(29)<<left<<setfill('_')<<""<<"|"<<endl;
-         int accountType1=0;
-         int accountType2=0;
-cout<<"You would like to move "<<amount<<" from : (account type)";
+         int accountType1=-1;
+         int accountType2=-1;
+while(accountType1!=z.getAccountType()&&accountType1!=x.getAccountType())
+    {
+   cout<<"You would like to move "<<amount<<" from : (account type)";
 cin>>accountType1;
+if(!checkCIN(accountType1))
+{
+    accountType1=-1;
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
+
+while(accountType2!=z.getAccountType()&&accountType2!=x.getAccountType())
+    {
 cout<<"to: ";
 cin>>accountType2;
+if(!checkCIN(accountType2))
+{
+    accountType2=-1;
+if(cancelTransaction())
+{
+    return;
+}
+}
+    }
+    
+Transaction t1 = Transaction(BankAccount(user->getUsername(), accountType1));
 
-//move amount from type1 to type2
+Transaction t2 = Transaction(BankAccount(user->getUsername(), accountType2));
+    if (t1.withdraw(amount) == false) {
+    cout << "Error : not enough funds in account to withdraw!" << endl;
+}
+else
+{
+    t2.deposit(amount);
+}
 }
 string transaction(){
   
@@ -222,7 +332,9 @@ string transaction(){
         cout<<setw(25)<<left<<"| 5. exit"<<"|"<<endl;
         cout<<"|"<<setw(24)<<left<<setfill('_')<<""<<"|"<<endl;
 
-        cin >> option;
+cin>>option;
+checkCIN(option);
+
     if (option == 1) {
         deposit();
         return "transaction";
@@ -249,41 +361,6 @@ string transaction(){
     }
  
 
-
-/*string createAccount(){
-    string username;
-    string password;
-    const int numUsers = User::getNumUsers();
-    int currentUsers;
-
-    do{
-        cout << "Enter your username: " << endl;
-        cin >> username;
-        if (toLower(username) == "back") {
-                return "back";
-                break;
-            }
-            if (toLower(username) == "exit") {
-                return "exit";
-                break;
-            }
-        cout << "Enter your password: " << endl;
-        cin >> password;
-        if (toLower(password) == "back") {
-                return "back";
-                break;
-            }
-            if (toLower(password) == "exit") {
-                return "exit";
-                break;
-            }
-
-        User::createUser(username, password);
-        currentUsers = User::getNumUsers();
-    } while(numUsers == currentUsers);
-
-    return "userLogin";
-}*/
 string viewAccounts()
 {
  User* user = dynamic_cast<User*>(currentPerson);
@@ -310,7 +387,8 @@ string viewAccounts()
         cout<<setw(30)<<left<<"| 4. exit"<<"|"<<endl;
        cout<<"|"<<setw(29)<<left<<setfill('_')<<""<<"|"<<endl;
 
-        cin >> option;
+        cin>>option;
+checkCIN(option);
     if (option == 1) {return "transaction";}
     else if (option == 2) {
         string account="";
@@ -355,7 +433,8 @@ BankAccount x = BankAccount(user->getUsername(), currentaccount);
         cout<<setw(30)<<left<<"| 2. exit"<<"|"<<endl;
        cout<<"|"<<setw(29)<<left<<setfill('_')<<""<<"|"<<endl;
 
-        cin >> option;
+       cin>>option;
+checkCIN(option);
    
      if (option == 1) {return "back";}
     else if (option == 2) {return "exit";}
@@ -491,7 +570,8 @@ string managerMenu(){
         cout << setw(35) << left << "| 6. Exit" << "|" << endl;
         cout << "|" << setw(34) << left << setfill('_') << "" << "|" << endl;
 
-        cin >> option;
+       cin>>option;
+checkCIN(option);
         
         string inputted_username = "";
         Manager* mgr = dynamic_cast<Manager*>(currentPerson);
@@ -523,7 +603,7 @@ string managerMenu(){
                 cout << "Invalid option" << endl;
                 break;
         }
-    } while(true);
+    } while(option==0);
     
     return "managerMenu";
 }
@@ -540,25 +620,25 @@ string homePage() {
         cout << setw(20) << left << "| 3. Manager Login" << "|" << endl;
         cout << setw(20) << left << "| 4. Exit" << "|" << endl;
         cout << "|" << setw(19) << left << setfill('_') << "" << "|" << endl;
-        cin >> option;
-    } while (option > 4 || option < 1);
+        cin>>option;
+checkCIN(option);
+   
     string method = "";
     switch(option) {
         case 1: //user login
-            method = "userLogin";
+            return "userLogin";
             break; 
         case 2: //create account
-            method = "createAccount";
+            return "createAccount";
             break;
         case 3: //manager login
-            method = "managerLogin";
+            return "managerLogin";
             break;
         case 4: // Exit
-            method = "exit";
-            default:
-        break;
+           return "exit";
     }
-    return method;
+     } while (option==0);
+     return "";
 }
 
 void run()
