@@ -3,14 +3,9 @@
 int User::numUsers = 0;
 
 User::User(string username, string password) : Person(username, password){
-    numAccounts = 0;
-    accounts = nullptr;
 }
 
 User::~User(){
-    if(accounts != nullptr){
-        delete[] accounts;
-    }
 }
 
 void User::loadExistingUsers() {
