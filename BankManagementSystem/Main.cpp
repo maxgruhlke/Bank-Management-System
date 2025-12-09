@@ -620,8 +620,7 @@ string homePage() {
         cout << "|" << setw(19) << left << setfill('_') << "" << "|" << endl;
         cin>>option;
 checkCIN(option);
-   
-    string method = "";
+
     switch(option) {
         case 1: //user login
             return "userLogin";
@@ -692,6 +691,7 @@ int main() {
     run();
     delete currentPerson;
 }
+
 
 
 
