@@ -118,13 +118,6 @@ string userLogin() {
     }
 }
 
-void printAccount(int accountNum)
-{
-    //currentuser.accounts[accountNum].printAccount()
-    //prints all account information can't really do anything on this page but view the info
-    //maybe add a cin asking user to enter when done viewing.
-
-}
 
 string userHomePage() {
     
@@ -145,7 +138,6 @@ string userHomePage() {
     else if (option == 2) {return "viewAccounts";}
     else if (option == 3) {return "back";}
     else if (option == 4) {return "exit";}
-    else{printAccount(option - 4);}
     } while(option == 0);
     return "";
 }
@@ -203,7 +195,7 @@ void withdraw()
     int amount=0;
     while(amount<=0)
     {
-        cout<<"How much money would you like to put in: ";
+        cout<<"How much money would you like to take out: ";
 cin>>amount;
 if(!checkCIN(amount))
 {
@@ -256,7 +248,7 @@ void transfer()
         int amount=0;
     while(amount<=0)
     {
-        cout<<"How much money would you like to put in: ";
+        cout<<"How much money would you like to transfer: ";
 cin>>amount;
 if(!checkCIN(amount))
 {
@@ -312,6 +304,7 @@ if(cancelTransaction())
 Transaction t1 = Transaction(BankAccount(user->getUsername(), accountType1));
 
 Transaction t2 = Transaction(BankAccount(user->getUsername(), accountType2));
+
     if (t1.withdraw(amount) == false) {
     cout << "Error : not enough funds in account to withdraw!" << endl;
                 return;
@@ -319,6 +312,7 @@ Transaction t2 = Transaction(BankAccount(user->getUsername(), accountType2));
 else
 {
     t2.deposit(amount);
+     cout << "You have successfully transfered $" << amount << " from account : " << accountType1 <<"to "<<accountType2<< endl;
 }
 }
 string transaction(){
@@ -354,7 +348,6 @@ checkCIN(option);
     }
     else if (option == 4) {return "back";}
     else if (option == 5) {return "exit";}
-    else{printAccount(option - 4);}
     } while(option == 0);
     return "";
 
@@ -679,7 +672,14 @@ void run()
         return;
     }
     else
-    {pageStack.push(nextPage);}
+    {
+        if(pageStack.top()!=nextPage)
+        { 
+            pageStack.push(nextPage);
+
+        }
+       
+    }
     
     } while(!pageStack.empty());
     
