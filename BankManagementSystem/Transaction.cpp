@@ -33,6 +33,7 @@ bool Transaction::withdraw(double amount) {
 		}
 
 		accountFile << "#-" <<fixed<<setprecision(2)<< amount << "\n";
+		accountFile.close();
 	}
 
 	return true;
@@ -59,6 +60,7 @@ void Transaction::deposit(double amount) {
 		}
 
 		accountFile << "#+" <<fixed<<setprecision(2)<< amount << "\n";
+		accountFile.close();
 	}
 }
 
@@ -76,6 +78,7 @@ vector<string> Transaction::getTransactionHistory() {
 				transactionHistory.push_back(line);
 			}
 		}
+		inputFile.close();
 	}
 
 	return transactionHistory;

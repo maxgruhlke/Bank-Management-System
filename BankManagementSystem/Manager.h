@@ -17,6 +17,7 @@ public:
     static void viewUserDetails(string username);
     static void viewAllTransactions();
     static void viewUserTransactions(string username);
+    static bool deleteUser(string username);
 };
 
 #endif

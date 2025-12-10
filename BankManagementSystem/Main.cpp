@@ -588,8 +588,10 @@ string managerMenu(){
         cout << setw(35) << left << "| 2. View User Details" << "|" << endl;
         cout << setw(35) << left << "| 3. View All Transactions" << "|" << endl;
         cout << setw(35) << left << "| 4. View User Transactions" << "|" << endl;
-        cout << setw(35) << left << "| 5. Back" << "|" << endl;
-        cout << setw(35) << left << "| 6. Exit" << "|" << endl;
+        cout << setw(35) << left << "| 5. Create User" << "|" << endl;
+        cout << setw(35) << left << "| 6. Delete User" << "|" << endl;
+        cout << setw(35) << left << "| 7. Back" << "|" << endl;
+        cout << setw(35) << left << "| 8. Exit" << "|" << endl;
         cout << "|" << setw(34) << left << setfill('_') << "" << "|" << endl;
 
        cin>>option;
@@ -615,10 +617,16 @@ checkCIN(option);
                 cin >> inputted_username;
                 mgr->viewUserTransactions(inputted_username);
                 break;
-            case 5:
+                case 5:
+                return "createUser";
+                break;
+                case 6:
+                return "deleteUser";
+                break;
+            case 7:
                 return "back";
                 break;
-            case 6:
+            case 8:
                 return "exit";
                 break;
             default:
@@ -629,7 +637,96 @@ checkCIN(option);
     
     return "managerMenu";
 }
+string createUser()
+{
+    string username;
+    string password;
+    const int numUsers = User::getNumUsers();
+    int currentUsers;
+cout << " " << setw(24) << setfill('_') << "" << endl;
+        cout << setw(25) << left << setfill(' ') << "|" << "|" << endl;
+    do{
+        cout  << setw(25) << left << "| Enter user's username: "<<"|" << endl;
+        cin >> username;
+        
+            if(toLower(username) == "back"){
+                return "back";
+                break;
+            }
+            if(toLower(username) == "exit"){
+                return "exit";
+                break;
+            }
 
+        cout  << setw(25) << left<<  "| Enter user's password: "<<"|" << endl;
+        cin >> password;
+        
+            if(toLower(password) == "back"){
+                return "back";
+                break;
+            }
+            if(toLower(password) == "exit"){
+                return "exit";
+                break;
+            }
+cout << "|" << setw(24) << left << setfill('_') << "" << "|" << endl;
+        
+        // Don't create a user if they already exist
+        if (User::createUser(username, password) == true) {
+            currentUsers = User::getNumUsers();
+        }
+        else {
+            cout << "User already exists!" << endl;
+            return "createAccount";
+        }
+        
+    } while(numUsers == currentUsers);
+
+    return "back";
+}
+string deleteUser()
+{
+    string username;
+    const int numUsers = User::getNumUsers();
+    int currentUsers;
+    Manager* mgr = dynamic_cast<Manager*>(currentPerson);
+cout << " " << setw(49) << setfill('_') << "" << endl;
+        cout << setw(50) << left << setfill(' ') << "|" << "|" << endl;
+    do{
+        cout << setw(50) << left<< "| Which user would you like to delete (username): "<<"|" << endl;
+        cin >> username;
+        
+            if(toLower(username) == "back"){
+                return "back";
+                break;
+            }
+            if(toLower(username) == "exit"){
+                return "exit";
+                break;
+            }
+                    cout << "|" << setw(49) << left << setfill('_') << "" << "|" << endl;
+            User temp("","");
+            if(!temp.findPerson(username).empty())
+            {
+               if(mgr->deleteUser(username))
+               {
+                cout << "User successfully removed from system" << endl;
+               } 
+               else
+               {
+                cout << "Problems removing user from system" << endl;
+               }
+            }
+            else
+            {
+            cout << "User doesn't exist!" << endl;
+            return "back";
+            }
+        
+    } while(numUsers == currentUsers);
+
+    return "back";
+}
 
 string homePage() {
     int option=0;
@@ -673,7 +770,9 @@ void run()
         {"managerMenu", managerMenu},
         {"viewAccounts", viewAccounts},
         {"viewAccount",viewAccount},
-        {"createAccount",createAccount}
+        {"createAccount",createAccount},
+        {"createUser",createUser},
+        {"deleteUser",deleteUser}
     };
     stack<string> pageStack;
     string currentPage = "homePage";
@@ -709,10 +808,13 @@ void run()
 
 
 int main() {
+
     //loads existing users into static user count
     User::loadExistingUsers();
     run();
+    
     delete currentPerson;
+    return 0;
 }
 
 

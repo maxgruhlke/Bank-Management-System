@@ -125,6 +125,7 @@ void BankAccount::incrementAccountNumber() {
     if (outputFile.is_open()) {
         outputFile << "!" + to_string((lastAccountNumber + 1)) << "\n";
     }
+    outputFile.close();
 }
 
 int BankAccount::getCurrentAccounts() {

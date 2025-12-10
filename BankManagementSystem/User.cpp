@@ -61,6 +61,7 @@ bool User::createUser(string username, string password) {
         if(outputFile.is_open()){
             outputFile << "!" << username << "\n";
             outputFile << "@" << password << "\n";
+            outputFile.close();
         }
         if (!filesystem::exists("Users/")) {
             filesystem::create_directory("Users/");
@@ -77,6 +78,7 @@ bool User::createUser(string username, string password) {
         if (checkingAccount.is_open()) {
             checkingAccount << "!0" + to_string(dummy.getLastAccountNumber()) << "\n";
             checkingAccount << "@0.00" << "\n";
+            checkingAccount.close();
         }
 
         dummy.incrementAccountNumber();
@@ -85,6 +87,7 @@ bool User::createUser(string username, string password) {
         if (savingsAccount.is_open()) {
             savingsAccount << "!1" + to_string(dummy.getLastAccountNumber()) << "\n";
             savingsAccount << "@0.00" << "\n";
+            savingsAccount.close();
         }
 
         return true;

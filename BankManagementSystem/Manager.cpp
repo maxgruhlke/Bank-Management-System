@@ -162,3 +162,58 @@ void Manager::viewUserTransactions(string username){
         cout << "User not found or has no accounts." << endl;
     }
 }
+
+ bool Manager::deleteUser(string username)
+ {
+
+    string tempFileName = "tempUsers.txt";
+string userFileName = "users.txt";
+    ifstream userFile(userFileName.c_str());
+    ofstream tempFile(tempFileName.c_str());
+    bool found=false;
+    if(userFile.is_open())
+    {
+        if(tempFile.is_open())
+        {
+            string line;
+
+		while (getline(userFile, line)) {
+			if (line[0] == '!') {
+				if(line.substr(1,line.size()-1)==username)
+                {
+                    found=true;
+                    getline(userFile, line);
+                    continue;
+                }
+			}
+            tempFile <<line<<endl;
+		}
+            
+
+        }
+        else{return false;}
+    }
+    else
+    {
+        return false;
+    }
+    
+    userFile.close();
+    tempFile.close();
+    remove(userFileName.c_str());
+    rename(tempFileName.c_str(), userFileName.c_str());
+    
+    filesystem::path userFolder=filesystem::path("Users/"+username);
+       if(exists(userFolder))
+       {
+        filesystem::remove_all(userFolder);
+           //  filesystem::remove_all(userFolder);
+       }
+       
+    
+    if(!found)
+    {return false;}
+       
+
+return true;
+ }
