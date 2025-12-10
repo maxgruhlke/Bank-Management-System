@@ -12,7 +12,7 @@ bool Transaction::withdraw(double amount) {
 	string accountPath = "Users/" + account.getUser() + "/account" + to_string(account.getAccountType()) + ".txt";
 
 	int currentAccountType = account.getAccountType();
-	int currentBalance = account.getAccountBalance();
+	double currentBalance = account.getAccountBalance();
 	int currentAccountNumber = account.getAccountNumber();
 	vector<string> currentTransactionHistory = getTransactionHistory();
 
@@ -32,7 +32,7 @@ bool Transaction::withdraw(double amount) {
 			accountFile << transaction << "\n";
 		}
 
-		accountFile << "#-" + to_string(amount) << "\n";
+		accountFile << "#-" <<fixed<<setprecision(2)<< amount << "\n";
 	}
 
 	return true;
@@ -42,7 +42,7 @@ void Transaction::deposit(double amount) {
 	string accountPath = "Users/" + account.getUser() + "/account" + to_string(account.getAccountType()) + ".txt";
 
 	int currentAccountType = account.getAccountType();
-	int currentBalance = account.getAccountBalance();
+	double currentBalance = account.getAccountBalance();
 	int currentAccountNumber = account.getAccountNumber();
 	vector<string> currentTransactionHistory = getTransactionHistory();
 
@@ -58,7 +58,7 @@ void Transaction::deposit(double amount) {
 			accountFile << transaction << "\n";
 		}
 
-		accountFile << "#+" + to_string(amount) << "\n";
+		accountFile << "#+" <<fixed<<setprecision(2)<< amount << "\n";
 	}
 }
 

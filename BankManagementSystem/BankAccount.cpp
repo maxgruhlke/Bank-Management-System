@@ -64,11 +64,11 @@ int BankAccount::getAccountNumber() {
     return accountNumber;
 }
 
-int BankAccount::getAccountBalance() {
+double BankAccount::getAccountBalance() {
     string userToFind = "./Users/" + user + "/account" + to_string(accountID) + ".txt";
     ifstream inputFile(userToFind);
 
-    int accountBalance = 0;
+    double accountBalance = 0;
 
     if (inputFile.is_open()) {
 
@@ -77,7 +77,7 @@ int BankAccount::getAccountBalance() {
         while (getline(inputFile, line)) {
             if (line[0] == '@') {
                 string formattedLine = line.erase(0, 1);
-                accountBalance = stoi(formattedLine);
+                accountBalance = stod(formattedLine);
                 break;
             }
         }

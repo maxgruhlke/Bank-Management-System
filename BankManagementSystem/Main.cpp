@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <cctype>
 #include <stack>
-
+#include <cmath>
 #include "Transaction.h"
 #include "BankAccount.h"
 #include "User.h"
@@ -16,6 +16,16 @@ using namespace std;
 Person* currentPerson;
 int currentaccount=0; 
 bool checkCIN (int& option)
+{
+if(cin.fail()) {
+            cin.clear(); 
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            option = 0; 
+            return false;
+        }
+        return true;
+}
+bool checkCIN (double& option)
 {
 if(cin.fail()) {
             cin.clear(); 
@@ -143,7 +153,7 @@ string userHomePage() {
 }
 void deposit()
 {
-    int amount=0;
+    double amount=0;
     while(amount<=0)
     {
         cout<<"How much money would you like to put in: ";
@@ -155,6 +165,7 @@ if(cancelTransaction())
     return;
 }
 }
+amount=round(amount * 100.0) / 100.0;
     }
 
  User* user = dynamic_cast<User*>(currentPerson);
@@ -192,7 +203,7 @@ if(cancelTransaction())
 }
 void withdraw()
 {
-    int amount=0;
+    double amount=0;
     while(amount<=0)
     {
         cout<<"How much money would you like to take out: ";
@@ -204,6 +215,7 @@ if(cancelTransaction())
     return;
 }
 }
+amount=round(amount * 100.0) / 100.0;
     }
  User* user = dynamic_cast<User*>(currentPerson);
         cout<<" "<<setw(30)<<setfill('_')<<""<<endl;
@@ -245,7 +257,7 @@ else {
 }
 void transfer()
 {
-        int amount=0;
+        double amount=0;
     while(amount<=0)
     {
         cout<<"How much money would you like to transfer: ";
@@ -257,6 +269,7 @@ if(cancelTransaction())
     return;
 }
 }
+amount=round(amount * 100.0) / 100.0;
     }
     User* user = dynamic_cast<User*>(currentPerson);
         cout<<" "<<setw(30)<<setfill('_')<<""<<endl;
@@ -312,7 +325,7 @@ Transaction t2 = Transaction(BankAccount(user->getUsername(), accountType2));
 else
 {
     t2.deposit(amount);
-     cout << "You have successfully transfered $" << amount << " from account : " << accountType1 <<"to "<<accountType2<< endl;
+     cout << "You have successfully transfered $" << amount << " from account : " << accountType1 <<" to "<<accountType2<< endl;
 }
 }
 string transaction(){
@@ -387,7 +400,16 @@ string viewAccounts()
 checkCIN(option);
     if (option == 1) {return "transaction";}
     else if (option == 2) {
-        string account="";
+      
+        return "viewAccount";
+    }
+    else if (option == 3) {return "back";}
+    else if (option == 4) {return "exit";}
+    } while(option == 0);
+    return "";
+}
+string viewAccount()
+{  string account="";
         int accountType=0;
         do{
             cout<<"Which account type would you like to see?: ";
@@ -402,26 +424,21 @@ checkCIN(option);
             }
             
             accountType=stoi(account);
-        }while(accountType!=x.getAccountType()&&accountType!=z.getAccountType());
-        currentaccount=accountType;
-        return "viewAccount";
-    }
-    else if (option == 3) {return "back";}
-    else if (option == 4) {return "exit";}
-    } while(option == 0);
-    return "";
-}
-string viewAccount()
-{
+        }while(accountType!=0&&accountType!=1);
      User* user = dynamic_cast<User*>(currentPerson);
         cout<<" "<<setw(30)<<setfill('_')<<""<<endl;
         cout<<setw(30)<<left<<setfill(' ')<<"|"<<"|"<<endl;
-BankAccount x = BankAccount(user->getUsername(), currentaccount);
+BankAccount x = BankAccount(user->getUsername(), accountType);
         cout <<left<<"| Account type : " <<setw(13)<< x.getAccountType() <<"|"<< endl;
         cout <<left<<"| Account number : "<<setw(11) << x.getAccountNumber() <<"|"<< endl;
         cout <<left<<"| Account balance : $"<<setw(9) << x.getAccountBalance() <<"|"<< endl;
-    //show transaction data
-    
+        Transaction t = Transaction(BankAccount(user->getUsername(), accountType));
+    vector<string> history =t.getTransactionHistory();
+    cout<<left<<setw(30)<<"| Transaction History:"<<"|"<<endl;
+    for(string transaction:history)
+    {
+        cout <<left<< "| "<<setw(28) <<transaction.substr(1,transaction.size()-1) <<"|"<< endl;
+    }
         int option=0;
     
     do {
@@ -620,7 +637,6 @@ string homePage() {
         cout << "|" << setw(19) << left << setfill('_') << "" << "|" << endl;
         cin>>option;
 checkCIN(option);
-
     switch(option) {
         case 1: //user login
             return "userLogin";
@@ -691,7 +707,6 @@ int main() {
     run();
     delete currentPerson;
 }
-
 
 
 

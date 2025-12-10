@@ -18,7 +18,7 @@ class BankAccount {
 		~BankAccount();
 		int getAccountType();
 		int getAccountNumber();
-		int getAccountBalance();
+		double getAccountBalance();
 		int getTotalAccounts();
 		void incrementTotalAccounts();
 		string getUser();

@@ -62,7 +62,9 @@ bool User::createUser(string username, string password) {
             outputFile << "!" << username << "\n";
             outputFile << "@" << password << "\n";
         }
-
+        if (!filesystem::exists("Users/")) {
+            filesystem::create_directory("Users/");
+        }
         if (!filesystem::exists("Users/" + username)) {
             filesystem::create_directory("Users/" + username);
         }
